@@ -8,10 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * This class is used to read the CSV file and load the data into the MySQL database.
@@ -40,6 +37,11 @@ public class CsvToMysqlReader {
             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
 
             while ((record = csvReader.readNext()) != null) {
+                Long playerId = Long.parseLong(record[10]);
+                if (isRecordExists(playerId, connection)) {
+                    continue;
+                }
+
                 for (int i = 0; i < record.length; i++) {
                     String value = record[i];
                     if ("TRUE".equals(value) || "FALSE".equals(value)) {
@@ -56,5 +58,19 @@ public class CsvToMysqlReader {
         } catch (IOException | SQLException | CsvValidationException e) {
             e.printStackTrace();
         }
+    }
+
+    private static boolean isRecordExists(Long playerId, Connection connection) throws SQLException {
+        String query = "SELECT COUNT(*) FROM player WHERE player_id = ?";
+        PreparedStatement checkStatement = connection.prepareStatement(query);
+        checkStatement.setLong(1, playerId);
+        ResultSet resultSet = checkStatement.executeQuery();
+
+        if (resultSet.next()) {
+            int count = resultSet.getInt(1);
+            return count > 0;
+        }
+
+        return false;
     }
 }
