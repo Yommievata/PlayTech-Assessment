@@ -1,0 +1,41 @@
+CREATE DATABASE IF NOT EXISTS playerDB;
+
+USE playerDB;
+
+CREATE TABLE IF NOT EXISTS player (
+    player_id BIGINT PRIMARY KEY UNIQUE,
+    ranking BIGINT,
+    season_id BIGINT,
+    tournament_id BIGINT,
+    tournament_region_id BIGINT,
+    tournament_region_code VARCHAR(255),
+    region_code VARCHAR(255),
+    tournament_name VARCHAR(255),
+    tournament_short_name VARCHAR(255),
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    is_active BOOLEAN,
+    is_opta BOOLEAN,
+    team_id BIGINT,
+    team_name VARCHAR(255),
+    played_positions VARCHAR(255),
+    age INT,
+    height INT,
+    weight INT,
+    position_text VARCHAR(255),
+    apps INT,
+    sub_on INT,
+    mins_played INT,
+    rating DOUBLE,
+    goal INT,
+    assist_total INT,
+    yellow_card INT,
+    red_card INT,
+    shots_per_game DOUBLE,
+    aerial_won_per_game DOUBLE,
+    man_of_the_match INT,
+    name VARCHAR(255),
+    is_man_of_the_match BOOLEAN,
+    played_positions_short VARCHAR(255),
+    pass_success DOUBLE
+);
