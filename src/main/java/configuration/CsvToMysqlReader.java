@@ -3,6 +3,7 @@ package configuration;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvValidationException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,13 +20,18 @@ import java.sql.ResultSet;
  */
 @Component
 public class CsvToMysqlReader {
+    @Value("${spring.datasource.url}")
+    private String jdbcUrl;
+
+    @Value("${spring.datasource.username}")
+    private String jdbcUser;
+
+    @Value("${spring.datasource.password}")
+    private String jdbcPassword;
 
     @PostConstruct
     public void loadCsvData() {
         String csvFile = "/Users/Tola/Downloads/players_server_app.csv";
-        String jdbcUrl = "jdbc:mysql://localhost:3306/playerDB";
-        String jdbcUser = "root";
-        String jdbcPassword = "pass";
 
         try {
             Connection connection = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword);
