@@ -21,9 +21,12 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public List<Player> getAllPlayers() {
+    public List<Player> getAllPlayers() throws NotFoundException {
             List<Player> players = playerRepository.findAll();
-            return players;
+            if (players.isEmpty())
+                throw new NotFoundException("No players found");
+            else
+                return players;
     }
 
     public Player getPlayerById(Long id) throws NotFoundException {

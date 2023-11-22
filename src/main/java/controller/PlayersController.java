@@ -30,7 +30,7 @@ public class PlayersController {
      * @return ResponseEntity containing a list of all players in the response body.
      */
     @GetMapping("/players")
-    public ResponseEntity<List<PlayerDTO>> getPlayers() {
+    public ResponseEntity<List<PlayerDTO>> getPlayers() throws NotFoundException {
         List<Player> players = playerService.getAllPlayers();
         List<PlayerDTO> playerDTOs = players.stream()
                 .map(playerService::mapPlayerToDto)

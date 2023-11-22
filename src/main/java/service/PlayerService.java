@@ -8,7 +8,7 @@ import model.Player;
 import java.util.List;
 
 public interface PlayerService {
-    List<Player> getAllPlayers();
+    List<Player> getAllPlayers() throws NotFoundException;
 
     Player getPlayerById(Long id) throws NotFoundException;
 
